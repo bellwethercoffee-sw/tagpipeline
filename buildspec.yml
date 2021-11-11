@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+  pre_build:
+    commands:
+      - echo 'i am prebuilding'
+  build:
+    commands:
+      - echo 'i am building'
+  post_build:
+    commands:
+      - echo 'i am postbuilding'
+      - TAG_NUMBER="$(git describe --tags --abbrev=0.0.0)"
