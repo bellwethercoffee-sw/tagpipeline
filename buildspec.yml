@@ -1,5 +1,12 @@
 version: 0.2
 
+env:
+variables:
+BRANCH_NAME: "develop"
+MAJOR_VERSION: "1"
+MINOR_VERSION: "0"
+PATCH_VERSION: "0"
+
 phases:
   install:
     runtime-versions:
@@ -10,8 +17,14 @@ phases:
   build:
     commands:
       - echo 'i am building'
+      #- bash git_taging.sh
   post_build:
     commands:
       - echo 'i am postbuilding'
-      ##
+      #####
       #- TAG_NUMBER="$(git describe --tags --abbrev=0)"
+
+#Cloudwatch integration with codepipeline
+#TODO
+#github tag event -> cloudwatch event -> codepipeline
+#github -> apigateway -> lambda -> codepipeline
