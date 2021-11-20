@@ -1,6 +1,6 @@
 version: 0.2
 
-env:
+env: eng
 variables:
 BRANCH_NAME: "develop"
 MAJOR_VERSION: "1"
@@ -21,7 +21,7 @@ phases:
   post_build:
     commands:
       - echo 'i am postbuilding'
-      #######$
+      ##########################
       #- TAG_NUMBER="$(git describe --tags --abbrev=0)"
 
 #Cloudwatch integration with codepipeline
