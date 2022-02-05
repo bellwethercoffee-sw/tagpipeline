@@ -2,7 +2,7 @@ import fileinput
 import os
 import requests
 from git import Repo
-
+from datetime import datetime
 REPO_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', ''))
 
 
@@ -40,8 +40,8 @@ def replace_version_string(file_name: str, previous_version: str, next_version: 
 if __name__ == '__main__':
     latest_action_release = get_latest_release(
         owner='bellwethercoffee-sw', repo_name='tagpipeline')
-    # detekt tags start with 'v' prefix
+
     latest_action_version = f'v{latest_action_release}'
 
-    create_release(latest_action_release, latest_detekt_version)
+    create_release(latest_action_release, "test")
     print('new release')
