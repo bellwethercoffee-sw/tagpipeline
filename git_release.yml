@@ -1,0 +1,25 @@
+name: Create Release
+
+on:
+  schedule:
+    - cron: "0 9 * * TUE,THU *"
+  workflow_dispatch:
+
+jobs:
+  check_release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          python -m pip install --upgrade pip
+          if [ -f function/requirements.txt ]; then pip install -r function/requirements.txt; fi
+      - name: Run script
+        run: |
+          python function/git_tag.py
