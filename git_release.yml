@@ -22,4 +22,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run script
         run: |
-          python git_release.py
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+          python git_release.py $SOURCE_TAG
+        env:
+          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}

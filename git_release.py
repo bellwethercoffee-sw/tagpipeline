@@ -30,7 +30,7 @@ if __name__ == '__main__':
     print(filedata)
     with open('README.md', 'w') as file:
         file.write(filedata)
-    repo.git.commit('-am', f'Prepare for release {new_tag_date}')
-    new_tag = repo.create_tag(new_tag_date, message=f'Version {new_tag_date}')
+    commit = repo.git.commit('-am', f'Prepare for release {new_tag_date}')
+    new_tag = repo.create_tag(new_tag_date, message=f'Version {new_tag_date}', ref=commit)
     repo.git.push('--set-upstream', 'origin')
     repo.remotes.origin.push(new_tag_date)
