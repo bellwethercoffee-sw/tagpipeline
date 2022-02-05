@@ -20,13 +20,15 @@ if __name__ == '__main__':
     latest_tag = str(tags[-1])
     print(latest_tag)
     new_tag = increment_ver(str(latest_tag))
-    new_tag_date = new_tag+"-"+str(now)
+    #new_tag_date = new_tag+"-"+str(now)
+    new_tag_date = new_tag
     print(new_tag_date)
     #REPLACE VERSION IN THE FILE
     with open('README.md', 'r') as file:
         filedata = file.read()
     filedata = filedata.replace(latest_tag, new_tag_date)
-    with open('file.txt', 'w') as file:
+    print(filedata)
+    with open('README.md', 'w') as file:
         file.write(filedata)
     repo.git.commit('-am', f'Prepare for release {new_tag_date}')
     new_tag = repo.create_tag(new_tag_date, message=f'Version {new_tag_date}')
