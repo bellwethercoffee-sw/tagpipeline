@@ -49,6 +49,7 @@ if __name__ == '__main__':
     with open('README.md', 'w') as file:
         file.write(filedata)
     commit = repo.git.commit('-am', f'Prepare for release {new_tag}')
+    print(commit)
     new_tag = repo.create_tag(new_tag, message=f'Version {new_tag}', ref=commit)
     repo.git.push('--set-upstream', 'origin')
     repo.remotes.origin.push(new_tag)
