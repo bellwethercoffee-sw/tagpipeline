@@ -36,11 +36,6 @@ if __name__ == '__main__':
     # latest_tag = str(tags[-1])
     latest_tag = "v1.0.1-beta-1+20220201.sha.2b9027f"
     print(latest_tag)
-    # hash = repo.head.commit
-    # hash = str(hash)[0:7]
-    # print(hash)
-
-
     commit = repo.git.commit('-am', f'Prepare for release {latest_tag}')
     new_commit_hash = commit.split('] ')[0].split(' ')[1]
     new_tag_version = increment_ver(str(latest_tag),date,new_commit_hash)
