@@ -43,10 +43,9 @@ if __name__ == '__main__':
 
     commit = repo.git.commit('-am', f'Prepare for release {latest_tag}')
     new_commit_hash = commit.split('] ')[0].split(' ')[1]
-    new_tag = increment_ver(str(latest_tag),date,new_commit_hash)
-    print(new_tag)
-    print(commit)
-    new_tag = repo.create_tag(new_tag, message=f'Version {new_tag}', ref=commit)
+    new_tag_version = increment_ver(str(latest_tag),date,new_commit_hash)
+    print(new_tag_version)
+    new_tag = repo.create_tag(new_tag_version, message=f'Version {new_tag_version}', ref=commit)
     repo.git.push('--set-upstream', 'origin')
     repo.remotes.origin.push(new_tag)
     # #REPLACE VERSION IN THE FILE
