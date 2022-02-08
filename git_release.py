@@ -36,20 +36,23 @@ if __name__ == '__main__':
     # latest_tag = str(tags[-1])
     latest_tag = "v1.0.1-beta-1+20220201.sha.2b9027f"
     print(latest_tag)
-    hash = repo.head.commit
-    hash = str(hash)[0:7]
-    print(hash)
-    new_tag = increment_ver(str(latest_tag),date,hash)
+    # hash = repo.head.commit
+    # hash = str(hash)[0:7]
+    # print(hash)
+
+
+    commit = repo.git.commit('-am', f'Prepare for release {latest_tag}')
+    new_commit_hash = commit.split('] ')[0].split(' ')[1]
+    new_tag = increment_ver(str(latest_tag),date,new_commit_hash)
     print(new_tag)
-    #REPLACE VERSION IN THE FILE
-    with open('README.md', 'r') as file:
-        filedata = file.read()
-    filedata = filedata.replace(latest_tag, new_tag)
-    print(filedata)
-    with open('README.md', 'w') as file:
-        file.write(filedata)
-    commit = repo.git.commit('-am', f'Prepare for release {new_tag}')
     print(commit)
     new_tag = repo.create_tag(new_tag, message=f'Version {new_tag}', ref=commit)
     repo.git.push('--set-upstream', 'origin')
     repo.remotes.origin.push(new_tag)
+    # #REPLACE VERSION IN THE FILE
+    # with open('README.md', 'r') as file:
+    #     filedata = file.read()
+    # filedata = filedata.replace(latest_tag, new_tag)
+    # print(filedata)
+    # with open('README.md', 'w') as file:
+    #     file.write(filedata)
