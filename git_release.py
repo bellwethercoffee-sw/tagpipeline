@@ -43,6 +43,7 @@ if __name__ == '__main__':
     new_tag = repo.create_tag(new_tag_version, message=f'Version {new_tag_version}')
     repo.git.push('--set-upstream', 'origin')
     repo.remotes.origin.push(new_tag)
+
     # #REPLACE VERSION IN THE FILE
     # with open('README.md', 'r') as file:
     #     filedata = file.read()
