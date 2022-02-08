@@ -17,7 +17,7 @@ def get_latest_release(owner: str, repo_name: str) -> str:
 def increment_ver(version,date,hash):
     version = version.split('-')
     beta_ver = version[2].split("+")
-    version = version[0]+"-"+version[1]+"-"+beta_ver[0]+"-"+date+"."+hash
+    version = version[0]+"-"+version[1]+"-"+beta_ver[0]+"+"+date+".sha."+hash
     return version
 
 def replace_version_string(file_name: str, previous_version: str, next_version: str):
