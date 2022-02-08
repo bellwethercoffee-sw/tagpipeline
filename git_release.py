@@ -32,11 +32,11 @@ if __name__ == '__main__':
     repo = Repo('.', search_parent_directories=True)
     REPO_PATH = repo.working_tree_dir
     repo = Repo(REPO_PATH)
-    # tags = sorted(repo.tags, key=lambda t: t.commit.committed_datetime)
-    # latest_tag = str(tags[-1])
-    latest_tag = "v1.0.1-beta-1+20220201.sha.2b9027f"
+    tags = sorted(repo.tags, key=lambda t: t.commit.committed_datetime)
+    latest_tag = str(tags[-1])
+    #latest_tag = "v1.0.1-beta-1+20220201.sha.2b9027f"
     print(latest_tag)
-    commit = repo.git.commit('-am', f'Prepare for release {latest_tag}')
+    commit = repo.git.commit('-am', f'Prepare for releasing new tag')
     new_commit_hash = commit.split('] ')[0].split(' ')[1]
     new_tag_version = increment_ver(str(latest_tag),date,new_commit_hash)
     print(new_tag_version)
