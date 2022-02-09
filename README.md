@@ -1,5 +1,1 @@
-# tagpipeline
-testing tag cicd pipeline
-##TEST TAG 1
-version: v6.1.2
-#v.1.0.0-beta+20220203
+Commit using latest tag: v1.0.1-beta-1+20220201
