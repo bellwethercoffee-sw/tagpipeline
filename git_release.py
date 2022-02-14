@@ -25,7 +25,7 @@ def replace_version_string(file_name: str, previous_version: str, next_version: 
     with fileinput.FileInput(f'{REPO_PATH}/{file_name}', inplace=True) as file:
         for line in file:
             print(line.replace(previous_version, next_version), end='')
-#test
+#testV2.0.2
 if __name__ == '__main__':
     date = datetime.datetime.now().strftime('%Y%m%d')
     print(date)
