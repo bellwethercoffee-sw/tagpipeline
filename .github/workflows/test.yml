@@ -62,7 +62,7 @@ jobs:
     needs: build
     outputs:
       DOCKER_IMAGE_TAG: ${{ steps.set-docker-image-tag.outputs.DOCKER_IMAGE_TAG}}
-      DOCKER_IMAGE_TAGV2: ${{ steps.set-docker-image-tag.outputs.DOCKER_IMAGE_TAGV2}}
+      DOCKER_IMAGE_TAGV2: ${{ steps.set-docker-image-tag2.outputs.DOCKER_IMAGE_TAGV2}}
     steps:
       - uses: actions/checkout@v2
         with:
