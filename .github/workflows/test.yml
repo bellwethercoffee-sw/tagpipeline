@@ -78,12 +78,7 @@ jobs:
       - name: Set Docker Image Tag standard
         id: set-docker-image-tag-standard
         run: |
-          branch=`git tag -l`
-          echo $branch
-          tagv2=$(echo $branch | tail -1)
-          tagv2=`echo "$tagv2"`
-          echo $tagv2 > .version
-          cat .version
+          echo "tagv2=$(git tag -l | tail -1)" >> $tagv2
           echo "::set-output name=DOCKER_IMAGE_TAGV2::$tagv2"
 
   release:
