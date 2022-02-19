@@ -77,13 +77,10 @@ jobs:
 
       - name: Set Docker Image Tag2
         id: set-docker-image-tag2
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-          run: |
-            git tag -l | tail -1
-            echo "GIT_TAG=$(git tag -l | tail -1)" >> $GITHUB_ENV
-            echo "::set-output name=DOCKER_IMAGE_TAGV2::$GIT_TAG"
+        run: |
+          git tag -l | tail -1
+          echo "GIT_TAG=$(git tag -l | tail -1)" >> $GITHUB_ENV
+          echo "::set-output name=DOCKER_IMAGE_TAGV2::$GIT_TAG"
         
       - name: Test
         run: |
