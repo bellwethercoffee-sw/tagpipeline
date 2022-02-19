@@ -81,6 +81,7 @@ jobs:
           branch=`git tag -l`
           echo $branch
           tagv2=$(echo $branch | tail -1)
+          tagv2=`echo "$tagv2"`
           echo $tagv2 > .version
           cat .version
           echo "::set-output name=DOCKER_IMAGE_TAGV2::$tagv2"
