@@ -81,13 +81,13 @@ jobs:
         id: set-docker-image-tag2
         run: |
           git tag -l | tail -1
-          echo "GIT_TAG=$(git tag -l | tail -1)" >> $GITHUB_ENV
-          echo "::set-output name=DOCKER_IMAGE_TAGV2::$GIT_TAG"
+          echo "DOCKER_IMAGE_TAGV2=$(git tag -l | tail -1)" >> $GITHUB_ENV
+
         
       - name: Test
         run: |
-          echo $GIT_TAG
-          echo ${{ env.GIT_TAG }}
+          echo $DOCKER_IMAGE_TAGV2
+          echo ${{ env.DOCKER_IMAGE_TAGV2 }}
 
       - name: Set env
         run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
