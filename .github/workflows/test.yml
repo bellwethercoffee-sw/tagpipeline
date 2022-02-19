@@ -71,13 +71,16 @@ jobs:
           branch=`git branch --show-current`
           tag=$(echo $branch | tr / _)
           tag=`if [ "$tag" = "develop" ]; then echo "latest-wip"; else echo "$tag"; fi`
+          echo $tag
           echo "::set-output name=DOCKER_IMAGE_TAG::$tag"
 
       - name: Set Docker Image Tag standard
         id: set-docker-image-tag-standard
         run: |
           branch=`git tag -l`
+          echo $branch
           tag=$(echo $branch | tail -1)
+          echo $tag
           echo "::set-output name=DOCKER_IMAGE_TAGV2::$tag"
 
   release:
