@@ -5,8 +5,8 @@ on:
         tags:
             - v*beta*
 
-  workflow_dispatch:
-    inputs:
+    workflow_dispatch:
+      inputs:
        environment:
          description: 'Environment'
          default: 'development'
