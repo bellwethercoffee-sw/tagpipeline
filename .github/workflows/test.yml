@@ -107,6 +107,13 @@ jobs:
           ls -lash
           echo "${{ env.DOCKER_IMAGE_TAG }}"
 
+  release_docker:
+    name: Release
+    needs: docker_tag
+    runs-on: ubuntu-latest
+    env:
+        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
+    steps:
       - name: Build Docker Image Standard
         run: |
           echo "${{ env.DOCKER_IMAGE_TAGV2 }}"
