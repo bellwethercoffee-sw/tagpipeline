@@ -5,8 +5,8 @@ on:
         tags:
             - v*beta*
 
-  workflow_dispatch:
-    inputs:
+    workflow_dispatch:
+      inputs:
        environment:
          description: 'Environment'
          default: 'development'
@@ -62,7 +62,6 @@ jobs:
     needs: build
     outputs:
       DOCKER_IMAGE_TAG: ${{ steps.set-docker-image-tag.outputs.DOCKER_IMAGE_TAG}}
-      DOCKER_IMAGE_TAGV2: ${{ steps.set-docker-image-tag.outputs.DOCKER_IMAGE_TAGV2}}
     steps:
       - uses: actions/checkout@v2
       - name: Set Docker Image Tag
@@ -73,20 +72,34 @@ jobs:
           tag=`if [ "$tag" = "develop" ]; then echo "latest-wip"; else echo "$tag"; fi`
           echo "::set-output name=DOCKER_IMAGE_TAG::$tag"
 
-      - name: Set Docker Image Tag standard
-        id: set-docker-image-tag-standard
-        run: |
-          branch=`git tag -l`
-          tag=$(echo $branch | tail -1)
-          echo "::set-output name=DOCKER_IMAGE_TAGV2::$tag"
+  docker_tag:
+    name: docker_tag
+    runs-on: ubuntu-latest
+    needs: build
+    outputs:
+      DOCKER_IMAGE_TAGV2: ${{ steps.set-docker-image-tag2.outputs.DOCKER_IMAGE_TAGV2}}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
 
+      - name: Set Docker Image Tag Based on github tag
+        id: set-docker-image-tag2
+        run: |
+          git tag -l | tail -1
+          echo "::set-output name=DOCKER_IMAGE_TAGV2::$(git tag -l | tail -1)"
+
+      - name: Test
+        run: |
+          echo $DOCKER_IMAGE_TAGV2
+          echo ${{ env.DOCKER_IMAGE_TAGV2 }}
   release:
     name: Release
     needs: test
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE_TAG: ${{ needs.test.outputs.DOCKER_IMAGE_TAG }}
-      DOCKER_IMAGE_TAGV2: ${{ needs.test.outputs.DOCKER_IMAGE_TAGV2 }}
+      DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
     steps:
 
       - name: Build Docker Image
@@ -97,4 +110,3 @@ jobs:
       - name: Build Docker Image Standard
         run: |
           echo "${{ env.DOCKER_IMAGE_TAGV2 }}"
-
