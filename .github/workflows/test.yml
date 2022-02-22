@@ -87,7 +87,7 @@ jobs:
         id: set-docker-image-tag2
         run: |
           git tag -l | tail -1
-          echo "::set-output name=DOCKER_IMAGE_TAGV2::$(git tag -l | tail -1)"
+          echo "::set-output name=DOCKER_IMAGE_TAGV2::$(git describe --tags --abbrev=0)"
 
       - name: Test
         run: |
