@@ -3,7 +3,7 @@ name: Docker Push TAG
 on:
   push:
     tags:
-      - v*beta*sha*
+      - v*sha*
 
 jobs:
   docker_tag:
