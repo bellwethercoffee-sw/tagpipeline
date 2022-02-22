@@ -93,13 +93,13 @@ jobs:
         run: |
           echo $DOCKER_IMAGE_TAGV2
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
+
   release:
     name: Release
     needs: test
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE_TAG: ${{ needs.test.outputs.DOCKER_IMAGE_TAG }}
-      DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
     steps:
 
       - name: Build Docker Image
@@ -108,7 +108,7 @@ jobs:
           echo "${{ env.DOCKER_IMAGE_TAG }}"
 
   release_docker:
-    name: Release
+    name: Release_Docker
     needs: docker_tag
     runs-on: ubuntu-latest
     env:
