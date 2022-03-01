@@ -19,8 +19,10 @@ jobs:
       - name: Set Docker Image Tag Based on github tag
         id: set-docker-image-tag2
         run: |
-          git tag -l | tail -1
-          echo "::set-output name=DOCKER_IMAGE_TAGV2::$(git describe --tags --abbrev=0)"
+          branch=`git branch --show-current`
+          tag=$(echo $branch | tr / _)
+          tag=`if [ "$tag" = "develop" ]; then echo "latest-wip"; else echo "$tag"; fi`
+          echo "::set-output name=DOCKER_IMAGE_TAGV2::$tag"
       - name: Test
         run: |
           echo $DOCKER_IMAGE_TAGV2
