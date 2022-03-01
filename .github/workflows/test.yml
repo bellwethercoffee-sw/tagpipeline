@@ -47,10 +47,10 @@ jobs:
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
   release_docker:
     name: Release_Docker
-    needs: [docker_tag]
+    needs: docker_tag
     runs-on: ubuntu-latest
     env:
-        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV2 }}
+        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
     steps:
       - name: Build Docker Image Standard
         run: |
@@ -58,7 +58,7 @@ jobs:
 
   release_docker2:
     name: Release_Docker2
-    needs: [docker_tag2]
+    needs: docker_tag2
     runs-on: ubuntu-latest
     env:
         DOCKER_IMAGE_TAGV3: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
