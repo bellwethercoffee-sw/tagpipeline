@@ -21,19 +21,38 @@ jobs:
         run: |
           git tag -l | tail -1
           echo "::set-output name=DOCKER_IMAGE_TAGV2::$(git describe --tags --abbrev=0)"
-
       - name: Test
         run: |
           echo $DOCKER_IMAGE_TAGV2
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
 
+  docker_tag2:
+    name: docker_tag2
+    runs-on: ubuntu-latest
+    outputs:
+      DOCKER_IMAGE_TAGV3: ${{ steps.set-docker-image-tag3.outputs.DOCKER_IMAGE_TAGV2}}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+
+      - name: Set Docker Image Tag Based on github tag
+        id: set-docker-image-tag3
+        run: |
+          git tag -l | tail -1
+          echo "::set-output name=DOCKER_IMAGE_TAGV2::$(git describe --tags --abbrev=0)"
+      - name: Test
+        run: |
+          echo $DOCKER_IMAGE_TAGV2
+          echo ${{ env.DOCKER_IMAGE_TAGV2 }}
   release_docker:
     name: Release_Docker
-    needs: docker_tag
+    needs: [docker_tag, docker_tag2]
     runs-on: ubuntu-latest
     env:
-        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
+        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
     steps:
       - name: Build Docker Image Standard
         run: |
+          echo "${{ env.DOCKER_IMAGE_TAGV3 }}"
           echo "${{ env.DOCKER_IMAGE_TAGV2 }}"
