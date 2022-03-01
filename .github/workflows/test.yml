@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: 'main'
+          ref: 'beta-1'
       - name: Set Docker Image Tag Based on github tag
         id: set-docker-image-tag2
         run: |
