@@ -50,7 +50,8 @@ jobs:
     needs: [docker_tag, docker_tag2]
     runs-on: ubuntu-latest
     env:
-        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
+        DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV2 }}
+        DOCKER_IMAGE_TAGV3: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
     steps:
       - name: Build Docker Image Standard
         run: |
