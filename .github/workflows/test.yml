@@ -29,6 +29,7 @@ jobs:
   docker_tag2:
     name: docker_tag2
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     outputs:
       DOCKER_IMAGE_TAGV3: ${{ steps.set-docker-image-tag3.outputs.DOCKER_IMAGE_TAGV2}}
     steps:
@@ -61,6 +62,7 @@ jobs:
   release_docker2:
     name: Release_Docker2
     needs: docker_tag2
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     env:
         DOCKER_IMAGE_TAGV3: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
