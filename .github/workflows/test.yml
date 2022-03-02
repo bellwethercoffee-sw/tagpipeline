@@ -25,6 +25,12 @@ jobs:
         run: |
           echo $DOCKER_IMAGE_TAGV2
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
+      - name: Create .version file
+        run: |
+          branch=`git branch --show-current`
+          branch=${branch##*/}
+          echo $branch+`date '+%Y%m%d'`.sha.`git rev-parse --short HEAD` > .version
+          cat .version
 
   docker_tag2:
     name: docker_tag2
@@ -46,6 +52,11 @@ jobs:
         run: |
           echo $DOCKER_IMAGE_TAGV2
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
+    - name: Create .version file
+      run: |
+        echo $(git describe --tags --abbrev=0) > .version
+        cat .version
+
   release_docker:
     name: Release_Docker
     needs: docker_tag
