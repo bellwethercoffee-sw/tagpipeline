@@ -56,6 +56,11 @@ jobs:
         run: |
           echo $(git describe --tags --abbrev=0) > .version
           cat .version
+      - name: Create .version file2
+        if: github.ref == 'refs/heads/*'
+        run: |
+          echo $(git describe --tags --abbrev=0) > .version
+          cat .version
 
   release_docker:
     name: Release_Docker
