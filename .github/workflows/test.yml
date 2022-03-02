@@ -9,12 +9,11 @@ jobs:
   docker_tag:
     name: docker_tag
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/*'
     outputs:
       DOCKER_IMAGE_TAGV2: ${{ steps.set-docker-image-tag2.outputs.DOCKER_IMAGE_TAGV2}}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: 'beta-1'
+      - uses: actions/checkout@v2
       - name: Set Docker Image Tag Based on github tag
         id: set-docker-image-tag2
         run: |
@@ -48,24 +47,24 @@ jobs:
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
   release_docker:
     name: Release_Docker
-    needs: [docker_tag,docker_tag2]
+    needs: docker_tag
+    if: github.ref == 'refs/heads/*'
     runs-on: ubuntu-latest
     env:
         DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
-        DOCKER_IMAGE_TAGV3: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
+
     steps:
       - name: Build Docker Image Standard
         run: |
           echo "${{ env.DOCKER_IMAGE_TAGV2 }}"
-          echo "${{ env.DOCKER_IMAGE_TAGV3 }}"
 
-#  release_docker2:
-#    name: Release_Docker2
-#    needs: docker_tag2
-#    runs-on: ubuntu-latest
-#    env:
-#        DOCKER_IMAGE_TAGV3: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
-#    steps:
-#      - name: Build Docker Image Standard
-#        run: |
-#          echo "${{ env.DOCKER_IMAGE_TAGV3 }}"
+  release_docker2:
+    name: Release_Docker2
+    needs: docker_tag2
+    runs-on: ubuntu-latest
+    env:
+        DOCKER_IMAGE_TAGV3: ${{ needs.docker_tag2.outputs.DOCKER_IMAGE_TAGV3 }}
+    steps:
+      - name: Build Docker Image Standard
+        run: |
+          echo "${{ env.DOCKER_IMAGE_TAGV3 }}"
