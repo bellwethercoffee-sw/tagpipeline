@@ -35,7 +35,6 @@ jobs:
   docker_tag2:
     name: docker_tag2
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
     outputs:
       DOCKER_IMAGE_TAGV3: ${{ steps.set-docker-image-tag3.outputs.DOCKER_IMAGE_TAGV2}}
     steps:
@@ -53,6 +52,7 @@ jobs:
           echo $DOCKER_IMAGE_TAGV2
           echo ${{ env.DOCKER_IMAGE_TAGV2 }}
       - name: Create .version file
+        if: startsWith(github.ref, 'refs/tags/v')
         run: |
           echo $(git describe --tags --abbrev=0) > .version
           cat .version
