@@ -4,7 +4,16 @@ on:
   push:
     tags:
       - v*sha*
-
+  workflow_dispatch:
+    inputs:
+       environment:
+         description: 'Environment'
+         default: 'development'
+         required: true
+       milestone:
+         description: 'Milestone: Values = beta|dvt'
+         default: 'beta'
+         required: true
 jobs:
   docker_tag:
     name: docker_tag
