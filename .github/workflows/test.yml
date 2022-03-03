@@ -18,7 +18,7 @@ jobs:
   docker_tag:
     name: docker_tag
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/*'
+    if: github.event_name == 'workflow_dispatch'
     outputs:
       DOCKER_IMAGE_TAGV2: ${{ steps.set-docker-image-tag2.outputs.DOCKER_IMAGE_TAGV2}}
     steps:
@@ -66,7 +66,7 @@ jobs:
           echo $(git describe --tags --abbrev=0) > .version
           cat .version
       - name: Create .version file2
-        if: github.ref == 'refs/heads/*'
+        if: github.event_name == 'workflow_dispatch'
         run: |
           echo $(git describe --tags --abbrev=0) > .version
           cat .version
@@ -74,7 +74,7 @@ jobs:
   release_docker:
     name: Release_Docker
     needs: docker_tag
-    if: github.ref == 'refs/heads/*'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
         DOCKER_IMAGE_TAGV2: ${{ needs.docker_tag.outputs.DOCKER_IMAGE_TAGV2 }}
